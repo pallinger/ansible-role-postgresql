@@ -72,4 +72,4 @@
   when: postgresql_log_directory is defined
 
 - name: "Stage 3: start postgresql service"
-  service: name="{{postgresql_service_name }}" state=started enabled=yes
+  service: name="{{postgresql_service_name }}" state=restarted enabled=yes

@@ -9,6 +9,8 @@
     role_attr_flags: "{{ item.flags }}"
   with_items: "{{ postgresql_users }}"
   when: postgresql_users and postgresql_users|length > 0
+  become: true
+  become_user: 'postgres'
 
 - name: "Stage 3: add postgresql replication roles"
   postgresql_user:
@@ -18,3 +20,5 @@
     password: "{{ postgresql_streaming_user.pass }}"
     role_attr_flags: REPLICATION
   when: postgresql_streaming_user and postgresql_streaming_user|length > 0
+  become: true
+  become_user: 'postgres'

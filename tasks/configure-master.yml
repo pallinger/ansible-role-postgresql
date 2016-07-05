@@ -31,8 +31,8 @@
   register: postgresql_data_stat
 
 - name: "Stage 2: initialize new postgresql cluster"
-  sudo: yes
-  sudo_user: "{{ postgresql_admin_user }}"
+  become: true
+  become_user: "{{ postgresql_admin_user }}"
   command: "{{ postgresql_exec_dir }}/initdb -D {{ postgresql_data_dir }}"
   when: postgresql_data_stat.stat.exists == False
 
@@ -62,4 +62,4 @@
   when: postgresql_log_directory is defined
 
 - name: "Stage 2: start postgresql service"
-  service: name="{{ postgresql_service_name }}" state=started enabled=yes
+  service: name="{{ postgresql_service_name }}" state=restarted enabled=yes
