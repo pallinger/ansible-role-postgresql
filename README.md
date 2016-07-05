@@ -7,7 +7,7 @@ Features:
   - Oracle Linux also supported but uses RHEL repositories
   - Debian 8
   - Ubuntu 14.04
-- supported PostgreSQL versions: 9.0, 9.1, 9.2, 9.3, 9.4.
+- supported PostgreSQL versions: 9.0, 9.1, 9.2, 9.3, 9.4, 9.5.
 - allows specify users, and dedicated replication user and databases which would be created after install.
 - ability to determine a set of postgresql.conf parameters and absense postgresql.conf template. Template is not used due to the fact that the postgresql.conf differs from version to version on a set of parameters.
 - ability to specify another cluster directory and setup symlink into original data location.
@@ -20,10 +20,33 @@ Known issues:
 How-to use:
 - download repo with git clone;
 - cd into role directory;
-- specify master and slaves ip addresses in inventory file;
-- specify master and slaves ip addresses and other configuration in defaults/main.yml file;
-- change hosts: variable in role.yml;
-- start ansible-playbook with role.yml and your inventory file.
+- specify `postgresql_master` boolean for master and slaves host or group variable or whatever:
 ```
-ansible-playbook -i inventory role.yml
+[db-postgresql]
+192.168.0.10 postgresql_master=true
+192.168.0.11 postgresql_master=false
+192.168.0.12 postgresql_master=false
+```
+- specify master and slaves ip addresses and other configuration in your variables:
+```
+postgresql_streaming_user:
+  name: rep
+  pass: secret
+postgresql_streaming_master: 192.168.0.10
+postgresql_streaming_slaves:
+ - 192.168.0.11
+ - 192.168.0.12
+```
+- set other relevant variables. (examples in `defaults/main`)
+- **important**: `sudo` must be installed on remote machines.
+- Run your playbook.
+```
+---
+- name: Install and configure postgresql replica sets
+  hosts: db-postgresql
+  remote_user: root
+  vars_files:
+    - 'vars_postgresql.yml'
+  roles:
+    - { role: ansible-role-postgresql }
 ```
