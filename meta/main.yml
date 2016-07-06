@@ -2,8 +2,8 @@
 
 galaxy_info:
   author: "Amnay Mokhtari"
-  description: A role to install and setup PostgreSQL 9.x Streaming Replication on RedHat/CentOS/Scientific/Oracle Enterprise Linux.
-  license: as-is
+  description: A role to install and setup PostgreSQL 9.x Streaming Replication on Debian/RedHat/CentOS/Scientific/Oracle Enterprise Linux.
+  license: MIT
   min_ansible_version: 1.4
   version: 1.0
   platforms:
