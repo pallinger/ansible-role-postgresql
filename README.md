@@ -18,6 +18,7 @@ Known issues:
 - RHEL 6: posqtgresqlXY-contrib doesn't install due to dependency error. In my case, this may be caused by the use of an unregistered RedHat distribution and unofficial third-party repositories. On the Oracle Enterprise Linux this issue does not occur.
 
 How-to use:
+
 - specify `postgresql_master` boolean for master and slaves host or group variable or whatever:
 ```
 [db-postgresql]
