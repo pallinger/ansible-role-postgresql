@@ -11,3 +11,11 @@
 - name: 'Stage 1: install Ansible postgresql dependency package'
   package: state='latest' pkg='python-psycopg2'
 
+# setup firewall
+- name: determine if ufw is installed
+  command: test -x /usr/sbin/ufw && echo True || echo False
+  register: ufw_installed
+
+- ufw: rule=allow port=5432 proto=tcp src={{ item }}
+  with_items: "{{ postgresql_streaming_slaves }}"
+  when: ufw_installed

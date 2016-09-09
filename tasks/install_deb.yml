@@ -3,8 +3,9 @@
 - include: 'postgresql_official_repo.yml'
 
 - name: "Stage 1: install postgresql package"
-  apt: 
+  apt:
     state: latest
     pkg: "{{ item }}"
   with_items:
     - postgresql-{{ postgresql_version }}
+

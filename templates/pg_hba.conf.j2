@@ -86,6 +86,8 @@ host	replication		{{ postgresql_streaming_user.name }}		{{ slave }}/32		{{ postg
 {% endfor %}
 
 # Custom
+{% if postgresql_pg_hba_custom is defined %}
 {% for connection in postgresql_pg_hba_custom %}
 {{ connection.type }}	{{ connection.database }}		{{ connection.role }}		{{ connection.address }}		{{ connection.method }}
 {% endfor %}
+{% endif %}
